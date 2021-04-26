@@ -3,6 +3,7 @@
 const BillWithSettings = () => {
 
     //initiating values to be set to zero 
+    let radioStr;
     let theCallCost = 0;
     let theSmsCost = 0;
     let theWarningLevel = 0;
@@ -10,9 +11,18 @@ const BillWithSettings = () => {
     let callCostTotal = 0;
     let smsCostTotal = 0;
 
+    //get radio button value
+    const setRadioInput = (string) => {
+        radioStr = string;
+    }
+
+    const getRadioInput = () => {
+        return radioStr;
+    }
+
     //setting the costs
     const setCallCost = (callCost) => {
-        theCallCost = callCost;
+        theCallCost = parseFloat(callCost);
     }
 
     const getCallCost = () => {
@@ -20,7 +30,7 @@ const BillWithSettings = () => {
     }
 
     const setSmsCost = (smsCost) => {
-        theSmsCost = smsCost;
+        theSmsCost = parseFloat(smsCost);
     }
 
     const getSmsCost = () => {
@@ -28,7 +38,7 @@ const BillWithSettings = () => {
     }
 
     const setWarningLevel = (warningLevel) => {
-        theWarningLevel = warningLevel
+        theWarningLevel = parseFloat(warningLevel)
     }
 
     const getWarningLevel = () => {
@@ -36,7 +46,7 @@ const BillWithSettings = () => {
     }
 
     const setCriticalLevel = (criticalLevel) => {
-        theCriticalLevel = criticalLevel;
+        theCriticalLevel = parseFloat(criticalLevel);
     }
 
     const getCriticalLevel = () => {
@@ -74,7 +84,7 @@ const BillWithSettings = () => {
     const totalClassName = () => {
 
         if(hasReachedCriticalLevel()){
-            return 'critical';
+            return 'danger';
         }
         if(getTotalCallCost() >= getWarningLevel()){
             return 'warning';
@@ -82,6 +92,8 @@ const BillWithSettings = () => {
     }
 
     return {
+        setRadioInput,
+        getRadioInput,
         setCallCost,
         getCallCost, 
         setSmsCost,

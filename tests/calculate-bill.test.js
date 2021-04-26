@@ -30,51 +30,75 @@ describe('Calculate Bill Function', () => {
     });
 
     describe('use values', () => {
-        it('should be able to make calls at 2.75 each', () => {
-            let calculateBill = BillWithString();
-
-            calculateBill.makeCall();
-            calculateBill.makeCall();
-            calculateBill.makeCall();
-
-            assert.equal(8.25, calculateBill.getCallCostTotal());
-            assert.equal(0.00, calculateBill.getSmsCostTotal());
-            assert.equal(8.25, calculateBill.getTotalCost());
-        });
-
-        it('should be able to send SMSs at 0.75 each', () => {
-            let calculateBill = BillWithString();
-
-            calculateBill.sendSms();
-            calculateBill.sendSms();
-            calculateBill.sendSms();
-
-            assert.equal(0.00, calculateBill.getCallCostTotal());
-            assert.equal(2.25, calculateBill.getSmsCostTotal());
-            assert.equal(2.25, calculateBill.getTotalCost());
-        });
-
-        it('should be able to make calls at 2.75 each and send SMSs at 0.75 each', () => {
-            let calculateBill = BillWithString();
-
-            calculateBill.makeCall();
-            calculateBill.sendSms();
-            calculateBill.sendSms();
-
-            assert.equal(2.75, calculateBill.getCallCostTotal());
-            assert.equal(1.50, calculateBill.getSmsCostTotal());
-            assert.equal(4.25, calculateBill.getTotalCost());
-        });
 
         it('should be able to split user input into single strings', () => {
             let calculateBill = BillWithString();
 
             calculateBill.setInputString('call, call, sms, sms');
 
-            assert.deepEqual(['call', 'call', 'sms', 'sms'], calculateBill.splitString())
+            assert.deepEqual(['call', ' call', ' sms', ' sms'], calculateBill.splitString())
+        });
+        
+        it('should be able to calculate the total cost from the input string', () => {
+            let calculateBill = BillWithString()
+
+            calculateBill.setInputString('call, call, sms, sms')
+            calculateBill.splitString();
+
+            assert.equal(7, calculateBill.getTotalCost())
+
+            let calculateBill2 = BillWithString()
+
+            calculateBill2.setInputString('call, call')
+            calculateBill2.splitString();
+
+            assert.equal(5.5, calculateBill2.getTotalCost())
+
         });
         
     });
+
+    describe('warning and critical values', () => {
+        it('should return a class of warning when total cost reaches R20', () => {
+            let calculateBill = BillWithString()
+
+            calculateBill.setInputString('sms, sms, call, call, sms, sms, call, call, sms, sms, call, call, sms, sms,  ')
+            calculateBill.splitString();
+            calculateBill.getTotalCost()
+
+            assert.equal('warning', calculateBill.addWarningClasses())
+
+            let calculateBill2 = BillWithString()
+
+            calculateBill2.setInputString('call, call, sms, sms, call, call, sms, sms, call, call, sms, sms,  ')
+            calculateBill2.splitString();
+            calculateBill2.getTotalCost()
+
+            assert.equal('warning', calculateBill2.addWarningClasses())
+        });
+
+        it('should return a class of "danger" when total cost reaches R30', () => {
+            let calculateBill = BillWithString()
+
+            calculateBill.setInputString('sms, sms, call, call, sms, sms, call, call, sms,sms, sms, call, call, sms, sms, call, call, sms, sms, call, call, sms, sms,  ')
+            calculateBill.splitString();
+            calculateBill.getTotalCost()
+
+            assert.equal('danger', calculateBill.addWarningClasses())
+
+            let calculateBill2 = BillWithString()
+
+            calculateBill2.setInputString('call, call, sms, sms, call, call,call, call, sms, sms, call, call,call, call, sms, sms, call, call,call, call, sms, sms, call, call, sms, sms, call, call, sms, sms,  ')
+            calculateBill2.splitString();
+            calculateBill2.getTotalCost()
+
+            assert.equal('danger', calculateBill2.addWarningClasses())
+        });
+        
+        
+        
+    });
+    
     
     
 });

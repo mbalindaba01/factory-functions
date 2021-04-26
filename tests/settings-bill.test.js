@@ -134,7 +134,7 @@ describe('Settings with Bill Factory Function', () => {
     });
 
     describe('warning and critical levels', () => {
-        it('should return a class name "critical" when critical level is reached', () => {
+        it('should return a class name "warning" when warning level is reached', () => {
             let settingsBill = BillWithSettings();
             settingsBill.setCriticalLevel(10);
             settingsBill.setCallCost(2.50);
@@ -147,7 +147,7 @@ describe('Settings with Bill Factory Function', () => {
             assert.equal('warning', settingsBill.totalClassName())
         });
 
-        it('should return a class name "critical" when critical level is reached', () => {
+        it('should return a class name "danger" when critical level is reached', () => {
             let settingsBill = BillWithSettings();
             settingsBill.setCriticalLevel(10)
             settingsBill.setCallCost(3.50);
@@ -163,7 +163,7 @@ describe('Settings with Bill Factory Function', () => {
             settingsBill.makeCall();
 
 
-            assert.equal('critical', settingsBill.totalClassName())
+            assert.equal('danger', settingsBill.totalClassName())
         });
 
         it('should stop the total call cost from increasing once critical level has been reached', () => {
@@ -181,7 +181,7 @@ describe('Settings with Bill Factory Function', () => {
 
 
 
-            assert.equal('critical', settingsBill.totalClassName())
+            assert.equal('danger', settingsBill.totalClassName())
         });
 
         it('should allow total to increase after reaching critical level and updating it to a higher value', () => {
@@ -197,7 +197,7 @@ describe('Settings with Bill Factory Function', () => {
             settingsBill.makeCall();
             settingsBill.makeCall();
 
-            assert.equal('critical', settingsBill.totalClassName());
+            assert.equal('danger', settingsBill.totalClassName());
             assert.equal(10, settingsBill.getTotalCallCost());
 
             settingsBill.setCriticalLevel(20);

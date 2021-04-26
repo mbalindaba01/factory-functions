@@ -1,18 +1,40 @@
 // get a reference to the textbox where the bill type is to be entered
-var billTypeText = document.querySelector('.billTypeText');
+const billTypeText = document.querySelector('.billTypeText')
 
 //reference to the total 
-var totalOne = document.querySelector('.totalOne')
+const totalOne = document.querySelector('.totalOne')
 
 //reference to the sms total 
-var smsTotalOne = document.querySelector('.smsTotalOne')
+const smsTotalOne = document.querySelector('.smsTotalOne')
 
 //reference to the call total
-var callTotalOne = document.querySelector('.callTotalOne')
+const callTotalOne = document.querySelector('.callTotalOne')
 
 //get a reference to the add button
-var addToBillBtn = document.querySelector('.addToBillBtn');
+const addToBillBtn = document.querySelector('.addToBillBtn')
 
+const textBillFunction = TextBill()
+
+addToBillBtn.addEventListener('click', () => {
+    textBillFunction.setInputStr(billTypeText.value)
+    
+    if(textBillFunction.getInputStr() == 'call'){
+        textBillFunction.makeCall()
+    }
+
+    if(textBillFunction.getInputStr() == 'sms'){
+        textBillFunction.sendSms()
+    }
+
+    smsTotalOne.innerHTML = textBillFunction.getTotalSmsCost().toFixed(2)
+    callTotalOne.innerHTML = textBillFunction.getTotalCallCost().toFixed(2)
+    totalOne.innerHTML = textBillFunction.getTotalCost().toFixed(2)
+
+    totalOne.classList.add(textBillFunction.addWarningClasses())
+
+})
+
+/*
 //Create a variable that will keep track of the sms total
 var smsTotal = 0
 
@@ -48,3 +70,4 @@ addToBillBtn.addEventListener('click', (e) => {
 // * add the appropriate value to the running total
 // * add nothing for invalid values that is not 'call' or 'sms'.
 // * display the latest total on the screen
+*/

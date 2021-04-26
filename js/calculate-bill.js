@@ -16,8 +16,9 @@ function calculateBill() {
     calcBill.getInputString();
     calcBill.splitString();
     calcBillTotal.innerHTML = calcBill.getTotalCost().toFixed(2);
-    calcBillTotal.classList.remove(calcBill.removeWarningClasses());
+    console.log(calcBill.getTotalCost().toFixed(2))
     calcBillTotal.classList.add(calcBill.addWarningClasses());
+    calcBillTotal.classList.remove(calcBill.removeWarningClasses());
 }
 
 

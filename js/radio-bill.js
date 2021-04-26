@@ -10,27 +10,31 @@ let callTotalTwo = document.querySelector('.callTotalTwo')
 //reference to final total
 const totalTwo = document.querySelector('.totalTwo')
 
-//variable to track call total
-let radioCallTotal = 0;
-
-//variable to track sms total
-let radioSmsTotal = 0;
-
-//variable to track final total;
-let radioBillTotal = 0;
-
 
 //reference the checked button
-const checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
 
 
 const radioBillFunction = RadioBill();
 
 radioBillAddBtn.addEventListener('click', () => {
+    const checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
     if(checkedRadioBtn){
-        radioBillFunction.setRadioInput(checkedRadioBtn.value)
+        (radioBillFunction.setRadioInput(checkedRadioBtn.value))
     }
 
+    if(radioBillFunction.getRadioInput() == 'call'){
+        radioBillFunction.makeCall()
+    }
+
+    if(radioBillFunction.getRadioInput() == 'sms'){
+        radioBillFunction.sendSms()
+    }
+
+    smsTotalTwo.innerHTML = radioBillFunction.getSmsTotal().toFixed(2)
+    callTotalTwo.innerHTML = radioBillFunction.getCallTotal().toFixed(2)
+    totalTwo.innerHTML = radioBillFunction.getTotalCost().toFixed(2)
+
+    totalTwo.classList.add(radioBillFunction.addWarningClasses())
 })
 
 

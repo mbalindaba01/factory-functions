@@ -41,13 +41,14 @@ const BillWithString = () => {
     }
 
     const removeWarningClasses = () => {
+        if(getTotalCost() < 20){
+            return 'warning'
+        }
+        
         if(getTotalCost() < 30){
             return 'danger'
         }
 
-        if(getTotalCost() < 20){
-            return 'warning'
-        }
     }
     return {
         setInputString,
