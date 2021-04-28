@@ -91,6 +91,21 @@ const BillWithSettings = () => {
         }
     }
 
+    const removeWarning = () => {
+        if(getWarningLevel() > getTotalCost() && getCriticalLevel() > getTotalCost() ){
+            removeDanger()
+            return 'warning'
+        }
+    }
+
+    const removeDanger = () => {
+        if(getCriticalLevel() > getTotalCost()){
+            return 'danger'
+        }
+    }
+
+
+
     return {
         setRadioInput,
         getRadioInput,
@@ -107,6 +122,8 @@ const BillWithSettings = () => {
         getTotalCallCost,
         getTotalSmsCost,
         sendSms,
-        totalClassName
+        totalClassName,
+        removeWarning, 
+        removeDanger
     }
 }
