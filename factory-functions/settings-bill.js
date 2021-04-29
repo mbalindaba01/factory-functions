@@ -78,7 +78,7 @@ const BillWithSettings = () => {
     }
 
     const hasReachedCriticalLevel = () => {
-        return getTotalCallCost() >= getCriticalLevel()
+        return getTotalCost() >= getCriticalLevel()
     }
 
     const totalClassName = () => {
@@ -86,7 +86,7 @@ const BillWithSettings = () => {
         if(hasReachedCriticalLevel()){
             return 'danger';
         }
-        if(getTotalCallCost() >= getWarningLevel()){
+        if(getTotalCost() >= getWarningLevel()){
             return 'warning';
         }
     }
